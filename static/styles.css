@@ -1,0 +1,180 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+tr.holiday {
+    background-color: red;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    display: inline-flex;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+li label {
+    font-weight: bold;
+}
+
+.button-submit {
+    margin-top: 20px;
+    padding: 10px 200px;
+    display: inline-flex;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.button-submit:hover {
+    background-color: #45a049;
+}
+
+.button-delete {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    
+}
+.button-delete:hover {
+    background-color: #ff0707;
+}
+
+.button-calculate {
+    padding: 10px 200px;
+    font-size: 16px;
+    background-color: #0099f8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.button-calculate:hover {
+    background-color: #0073ff;
+}
+
+input[type="date"] {
+    /* Change font, color, border, padding, etc. */
+    font-family: Arial, sans-serif;
+    color: #333;
+    border: 1px solid #0073ff;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-right: 20px;
+}
+  
+input[type="date"]:focus {
+    /* Style when the input is focused */
+    border-color: #ff0707;
+    outline: none;
+}
+
+
+select {
+    /* Change font, color, border, padding, etc. */
+    font-family: Arial, sans-serif;
+    color: #333;
+    border: 1px solid #0073ff;
+    border-radius: 4px;
+    padding: 10px 80px;
+    background-color: #fff;
+    margin-right: 20px;
+}
+  
+select:focus {
+    /* Style when the input is focused */
+    border-color: #ff0707;
+    outline: none;
+}
+
+
+.main-routine-table tr:nth-child(6n) {
+    border-bottom: 5px solid red;
+}
+
+
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Modified CSS for sub-driver dropdown */
+.sub-driver-container {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#subDriver {
+    margin-left: 20px; /* Add some spacing between the main driver and sub-driver dropdowns */
+}

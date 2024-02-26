@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carpool Table</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const driverSelect = document.getElementById('driver');
+            const colleagueCheckboxes = document.querySelectorAll('input[type="checkbox"][name^="m"]');
+            
+            // Function to disable checkboxes for absent colleagues
+            function disableCheckbox(driver) {
+                colleagueCheckboxes.forEach(function(checkbox) {
+                    if (checkbox.id === driver) {
+                        checkbox.checked = false; // Uncheck the selected driver
+                        checkbox.disabled = true; // Disable the checkbox for the selected driver
+                    } else {
+                        checkbox.disabled = false; // Enable checkboxes for other colleagues
+                    }
+                });
+            }
+            
+            // Event listener to call the disableCheckbox function when a driver is selected
+            driverSelect.addEventListener('change', function() {
+                const selectedDriver = this.value.toLowerCase();
+                disableCheckbox(selectedDriver);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Carpool Table</h1>
+    <form method="POST" action="/">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <label for="driver">Driver:</label>
+        <select id="driver" name="driver" required onchange="showSubDriver()">
+            <option value="" disabled selected>-- Select Driver --</option>
+            <option value="M1">Dr. Prashant Lakkadwala</option>
+            <option value="M2">Dr. Praveen Gupta</option>
+            <option value="M3">Dr. Kamlesh Gupta</option>
+            <option value="M4">Dr. Suresh Jain</option>
+            <option value="M5">Dr. U. B. S. Chandrawat</option>
+        </select>
+        <!-- Add a container for the sub-driver dropdown -->
+        <div class="sub-driver-container">
+            <label for="subDriver">Sub-Driver:</label>
+            <select id="subDriver" name="subDriver" disabled>
+                <option value="" disabled selected>-- Select Sub-Driver --</option>
+                <option value="m1">Dr. Prashant Lakkadwala</option>
+                <option value="m2">Dr. Praveen Gupta</option>
+                <option value="m3">Dr. Kamlesh Gupta</option>
+                <option value="m4">Dr. Suresh Jain</option>
+            </select>
+        </div>
+        <label for="holiday">Holiday:</label>
+        <input type="checkbox" id="holiday" name="holiday">
+
+        <!-- New section for colleagues -->
+        <h2>Colleagues Absent:</h2>
+        <ul id="absentee">
+            <li><input type="checkbox" id="m1" name="m1">Dr. Prashant Lakkadwala</li>
+            <li><input type="checkbox" id="m2" name="m2">Dr. Praveen Gupta</li>
+            <li><input type="checkbox" id="m3" name="m3">Dr. Kamlesh Gupta</li>
+            <li><input type="checkbox" id="m4" name="m4">Dr. Suresh Jain</li>
+            <li><input type="checkbox" id="m5" name="m5">Dr. U. B. S. Chandrawat</li>
+        </ul>
+        <!-- End of colleagues section -->
+        <br>
+        <button class="button-submit" type="submit">Submit</button>
+    </form>
+
+
+
+    <script>
+        function showSubDriver() {
+            var driverSelect = document.getElementById('driver');
+            var subDriverSelect = document.getElementById('subDriver');
+            if (driverSelect.value === 'M5') {
+                subDriverSelect.disabled = false;
+            } else {
+                subDriverSelect.disabled = true;
+            }
+        }
+    </script>
+    
+    <table class="main-routine-table">
+        <h2>Main Routine</h2>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Dr. Prashant</th>
+                <th>Dr. Praveen</th>
+                <th>Dr. Kamlesh</th>
+                <th>Dr. Suresh</th>
+                <th>Dr. Uday</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in carpool_data %}
+            <tr>
+                {% if record.m1 == "H" %}
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.date }}</td>
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m1 }}</td>
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m2 }}</td>
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m3 }}</td>
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m4 }}</td>
+                <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m5 }}</td>
+                {% else %}
+                <td>{{ record.date }}</td>
+                <td>{{ record.m1 }}</td>
+                <td>{{ record.m2 }}</td>
+                <td>{{ record.m3 }}</td>
+                <td>{{ record.m4 }}</td>
+                <td>{{ record.m5 }}</td>
+                {% endif %}
+                <td>
+                    <form method="POST" action="/delete">
+                        <input type="hidden" name="date" value="{{ record.date }}">
+                        <button class="button-delete" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% if loop.index % 5 == 0 %}
+            <tr>
+                <td colspan="7">
+                    <form method="POST" action="/calculate_cumulative">
+                        <input type="hidden" name="start_date" value="{{ carpool_data[loop.index-5].date }}">
+                        <input type="hidden" name="end_date" value="{{ record.date }}">
+                        <button class="button-calculate" type="submit">Calculate Cumulative</button>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+
+    <table>
+        <h2>Sub Routine</h2>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Dr. Prashant</th>
+                <th>Dr. Praveen</th>
+                <th>Dr. Kamlesh</th>
+                <th>Dr. Suresh</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sub_record in sub_routine_data %}
+            <tr>
+                <td>{{ sub_record.date }}</td>
+                <td>{{ sub_record.m1 }}</td>
+                <td>{{ sub_record.m2 }}</td>
+                <td>{{ sub_record.m3 }}</td>
+                <td>{{ sub_record.m4 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    <table>
+        <thead>
+            <h2>Cumulative Data</h2>
+            <tr>
+                <th>Cumulative</th>
+                <th>M1</th>
+                <th>M2</th>
+                <th>M3</th>
+                <th>M4</th>
+                <th>M5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Day</td>
+                <td>{{ cumulative_data[0][0] }}</td>
+                <td>{{ cumulative_data[1][0] }}</td>
+                <td>{{ cumulative_data[2][0] }}</td>
+                <td>{{ cumulative_data[3][0] }}</td>
+                <td>{{ cumulative_data[4][0] }}</td>
+            </tr>
+            <tr>
+                <td>Carry</td>
+                <td>{{ cumulative_data[0][1] }}</td>
+                <td>{{ cumulative_data[1][1] }}</td>
+                <td>{{ cumulative_data[2][1] }}</td>
+                <td>{{ cumulative_data[3][1] }}</td>
+                <td>{{ cumulative_data[4][1] }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carpool Table</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Range: {{ start_date}} To {{ end_date}}</h1>
+    <div style="border: 2px solid black; margin: 20px; padding: 10px; border-radius: 20px;">
+        <h2>Main Routine Cumulative Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cumulative</th>
+                    <th>M1</th>
+                    <th>M2</th>
+                    <th>M3</th>
+                    <th>M4</th>
+                    <th>M5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Day</td>
+                    <td>{{ cumulative_data[0][0] }}</td>
+                    <td>{{ cumulative_data[1][0] }}</td>
+                    <td>{{ cumulative_data[2][0] }}</td>
+                    <td>{{ cumulative_data[3][0] }}</td>
+                    <td>{{ cumulative_data[4][0] }}</td>
+                </tr>
+                <tr>
+                    <td>Carry</td>
+                    <td>{{ cumulative_data[0][1] }}</td>
+                    <td>{{ cumulative_data[1][1] }}</td>
+                    <td>{{ cumulative_data[2][1] }}</td>
+                    <td>{{ cumulative_data[3][1] }}</td>
+                    <td>{{ cumulative_data[4][1] }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <h2>Main Routine</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Dr. Prashant</th>
+                    <th>Dr. Praveen</th>
+                    <th>Dr. Kamlesh</th>
+                    <th>Dr. Suresh</th>
+                    <th>Dr. Uday</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in carpool_data %}
+                <tr>
+                    {% if record.m1 == "H" %}
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.date }}</td>
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m1 }}</td>
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m2 }}</td>
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m3 }}</td>
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m4 }}</td>
+                    <td style="background-color: rgba(255, 0, 0, 0.5);">{{ record.m5 }}</td>
+                    {% else %}
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.m1 }}</td>
+                    <td>{{ record.m2 }}</td>
+                    <td>{{ record.m3 }}</td>
+                    <td>{{ record.m4 }}</td>
+                    <td>{{ record.m5 }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div style="border: 2px solid black; margin: 20px; padding: 10px; border-radius: 20px;"> 
+        <h2>Sub-Routine Cumulative Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cumulative</th>
+                    <th>M1</th>
+                    <th>M2</th>
+                    <th>M3</th>
+                    <th>M4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Day</td>
+                    <td>{{ cumulative_sub_data[0][0] }}</td>
+                    <td>{{ cumulative_sub_data[1][0] }}</td>
+                    <td>{{ cumulative_sub_data[2][0] }}</td>
+                    <td>{{ cumulative_sub_data[3][0] }}</td>
+                </tr>
+                <tr>
+                    <td>Carry</td>
+                    <td>{{ cumulative_sub_data[0][1] }}</td>
+                    <td>{{ cumulative_sub_data[1][1] }}</td>
+                    <td>{{ cumulative_sub_data[2][1] }}</td>
+                    <td>{{ cumulative_sub_data[3][1] }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br><br>
+        <h2>Sub-Routine</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Dr. Prashant</th>
+                    <th>Dr. Praveen</th>
+                    <th>Dr. Kamlesh</th>
+                    <th>Dr. Suresh</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in sub_routine_data %}
+                <tr>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.m1 }}</td>
+                    <td>{{ record.m2 }}</td>
+                    <td>{{ record.m3 }}</td>
+                    <td>{{ record.m4 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br><br><br>
+
+</body>
+</html>
