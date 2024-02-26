@@ -190,4 +190,4 @@ def index():
     return render_template('index.html', carpool_data=carpool_data, cumulative_data=cumulative_data, sub_routine_data=sub_routine_data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
