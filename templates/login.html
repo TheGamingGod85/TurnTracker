@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h1>Editor Login</h1>
+    
+    <form id="loginForm" method="post" action="/login">
+        <label for="username">Username: </label>
+        <input style="width: 20%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: 2px solid #6200ff; border-radius: 4px;" type="text" id="username" name="username" required><br>
+        <label for="password">Password: </label>
+        <input style="width: 20%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: 2px solid #6200ff; border-radius: 4px;" type="password" id="password" name="password" required><br><br>
+        <button type="submit" class="button-submit">Login As Editor</button>
+    </form>
+    <form method="POST" action="/visit">
+        <button type="submit" class="button-calculate">See Data As Visitor</button>
+    </form>
+
+    <div id="notification" class="notification"></div>
+
+    <div id="creditsCard" class="creditsCard">
+        <p>Made by TheGamingGod85</p>
+    </div>
+
+    <script>
+        // Function to show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            // Hide notification after 5 seconds
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Get error message from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        if (error) {
+            showNotification(error);
+        }
+
+        // Redirect to GitHub in a new browser tab when credits card is clicked
+        const creditsCard = document.getElementById('creditsCard');
+        creditsCard.addEventListener('click', function() {
+            window.open('https://github.com/TheGamingGod85', '_blank');
+        });
+    </script>
+
+</body>
+
+</html>

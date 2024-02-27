@@ -8,27 +8,37 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const driverSelect = document.getElementById('driver');
+            const subDriverSelect = document.getElementById('subDriver');
             const colleagueCheckboxes = document.querySelectorAll('input[type="checkbox"][name^="m"]');
-            
+    
             // Function to disable checkboxes for absent colleagues
-            function disableCheckbox(driver) {
+            function disableCheckbox(driver, subDriver) {
                 colleagueCheckboxes.forEach(function(checkbox) {
-                    if (checkbox.id === driver) {
-                        checkbox.checked = false; // Uncheck the selected driver
-                        checkbox.disabled = true; // Disable the checkbox for the selected driver
+                    if (checkbox.id === driver || checkbox.id === subDriver) {
+                        checkbox.checked = false; // Uncheck the selected driver or sub-driver
+                        checkbox.disabled = true; // Disable the checkbox for the selected driver or sub-driver
                     } else {
                         checkbox.disabled = false; // Enable checkboxes for other colleagues
                     }
                 });
             }
-            
+    
             // Event listener to call the disableCheckbox function when a driver is selected
             driverSelect.addEventListener('change', function() {
                 const selectedDriver = this.value.toLowerCase();
-                disableCheckbox(selectedDriver);
+                const selectedSubDriver = subDriverSelect.value.toLowerCase();
+                disableCheckbox(selectedDriver, selectedSubDriver);
+            });
+    
+            // Event listener to call the disableCheckbox function when a sub-driver is selected
+            subDriverSelect.addEventListener('change', function() {
+                const selectedDriver = driverSelect.value.toLowerCase();
+                const selectedSubDriver = this.value.toLowerCase();
+                disableCheckbox(selectedDriver, selectedSubDriver);
             });
         });
     </script>
+    
 </head>
 <body>
     <h1>Carpool Table</h1>
@@ -71,9 +81,11 @@
         <br>
         <button class="button-submit" type="submit">Submit</button>
     </form>
-
-
-
+    <form method="get" action="{{ url_for('logout') }}" class="logout-form">
+        <button type="submit" class="button-delete">Logout</button>
+    </form>
+    
+    
     <script>
         function showSubDriver() {
             var driverSelect = document.getElementById('driver');

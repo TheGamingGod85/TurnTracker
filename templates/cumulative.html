@@ -8,6 +8,15 @@
 </head>
 <body>
     <h1>Range: {{ start_date}} To {{ end_date}}</h1>
+    {% if current_user.is_authenticated %}
+        <form method="get" action="{{ url_for('index') }}" class="logout-form">
+            <button type="submit" class="button-delete">Go back</button>
+        </form>
+    {% else %}
+        <form method="get" action="{{ url_for('visit') }}" class="logout-form">
+            <button type="submit" class="button-delete">Go back</button>
+        </form>
+    {% endif %}
     <div style="border: 2px solid black; margin: 20px; padding: 10px; border-radius: 20px;">
         <h2>Main Routine Cumulative Table</h2>
         <table>
